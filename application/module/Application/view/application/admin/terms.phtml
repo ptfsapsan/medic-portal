@@ -1,0 +1,89 @@
+<?php
+use Zend\Form\Element\Select;
+use Zend\Form\Element\Checkbox;
+
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/checkbox-button.css'))
+;
+$this->headScript()
+   ->appendFile($this->basePath('js/admin/terms.js'))
+;
+
+$checkbox = new Checkbox('active');
+$checkbox->setCheckedValue('yes');
+$checkbox->setUncheckedValue('no');
+$terms = $this->terms;
+?>
+
+<div>
+   <? $select = new Select('section_id');
+   $sections = [];
+   foreach($this->sections as $key => $section)
+      $sections[$key] = $this->translate('menu_'.$section);
+   $select->setValueOptions($sections);
+   $select->setValue($this->section_id);
+   $select->setLabel('Разделы: ');
+   echo $this->formRow($select);?>
+</div>
+
+<div>
+   Добавить термин
+   <form method="get">
+      <input type="hidden" name="act" value="add_term">
+      <input type="hidden" name="section_id" value="<?=$this->section_id?>">
+      <input type="text" name="title">
+      <input type="submit" value="Добавить">
+   </form>
+</div>
+
+<div>
+   <? if(count($terms['data'])){?>
+      <table>
+         <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <td>Редактировать тексты</td>
+            <th>Активность</th>
+            <th>Удалить</th>
+         </tr>
+         <? foreach($terms['data'] as $term){
+            $id = $term['id'];?>
+            <tr>
+               <td><?=$term['id']?></td>
+               <td><?=$term['title']?></td>
+               <td>
+                  <a href="<?=$this->url('admin',
+                     ['action' => 'term', 'id' => $id])?>">
+                     тексты
+                  </a>
+               </td>
+               <td>
+                  <div class="can-toggle">
+                     <? $checkbox->setAttributes([
+                        'id' => 'active_'.$id,
+                        'data-id' => $id,
+                     ]);
+                     $checkbox->setValue($term['active']);
+                     echo $this->formElement($checkbox);?>
+                     <label for="active_<?=$id?>">
+                     <span class="toggle-switch" data-checked="On"
+                           data-unchecked="Off"> </span>
+                     </label>
+                  </div>
+               </td>
+               <td>
+                  <a href="?act=delete&id=<?= $id ?>">
+                     <img src="<?= $this->basePath('images/delete-icon.png') ?>"
+                          alt="">
+                  </a>
+               </td>
+            </tr>
+         <? }?>
+      </table>
+      <?=$this->paginatorWidget($terms)?>
+   <? }
+   else{?>
+      Нет терминов
+   <? }?>
+</div>
+

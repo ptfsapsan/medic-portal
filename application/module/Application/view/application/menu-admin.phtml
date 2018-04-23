@@ -1,0 +1,19 @@
+
+
+<ul id="menu_cont">
+   <? $sel = [];
+   $active = '';
+   foreach($this->container as $page){
+      $label = $this->translate($page->getLabel());
+      $href = $page->getHref();
+      $sel[$href] = $label;
+      if($page->isActive()) $active = $href;
+      ?>
+      <li<?= $page->isActive(true)? ' class="active"': '' ?>>
+         <a href="<?= $href ?>" title="<?= $label ?>">
+            <?= $label ?>
+         </a>
+      </li>
+   <? } ?>
+</ul>
+

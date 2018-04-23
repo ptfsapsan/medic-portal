@@ -1,0 +1,33 @@
+<? $domain = $this->serverUrl();
+$langs = $this->langs;
+$sections = $this->sections;
+?>
+User-Agent: *
+
+Disallow: /
+
+<? foreach($langs as $lang){?>
+   
+   Allow: /<?=$lang?>
+
+   Allow: /<?=$lang?>/contacts
+   <? foreach($sections as $section){?>
+      Allow: <?="/$lang/$section$"?>
+
+      Allow: <?="/$lang/$section/term/*"?>
+
+   <? }?>
+<? }?>
+
+   Allow: /sitemap.xml
+   Allow: /sitemap/*
+
+
+Host: medic-portal.com
+
+sitemap: <?=$domain?>/sitemap.xml
+
+<? foreach($langs as $lang){?>
+   sitemap: <?=$domain?>/sitemap/<?=$lang?>
+   
+<? }?>

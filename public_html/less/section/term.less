@@ -1,0 +1,45 @@
+@import '../vars';
+
+#middle{
+  float: left;
+  width: ~"calc(100% - @{right-w} - 10px)";
+  h1{
+    font-size: 18px;
+    margin: 0 0 20px;
+    text-align: center;
+  }
+  div{
+    margin: 10px;
+    text-shadow: 1px 1px 3px #999;
+    p{
+      text-indent: 1em;
+      max-width: 600px;
+      float: left;
+      margin-bottom: 15px;
+      text-align: justify;
+      &:nth-of-type(2n){
+        float: right;
+      }
+    }
+    ul{
+      list-style-type: disc;
+      display: table;
+      margin-bottom: 15px;
+    }
+    ol{
+      list-style-type: decimal;
+    }
+    ul, ol{
+      margin-left: 15px;
+    }
+
+  }
+  #articles{
+    clear: both;
+  }
+}
+
+#right{
+  width: @right-w;
+  float: right;
+}

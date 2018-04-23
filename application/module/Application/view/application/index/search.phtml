@@ -1,0 +1,29 @@
+<?
+use Application\Model\Main;
+
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/index/search.css'));
+
+
+$items = $this->items;
+$is_term = $items['type'] == 'term';
+$lang = $this->layout()->lang;
+?>
+
+<div>
+   <? if(count($items['data'])){?>
+      <? foreach($items['data'] as $item){
+         $link = $is_term? $this->url('term', [
+            'lang' => $lang,
+            'term' => $item['link'],
+            'section' => Main::getSections()[$item['section_id']]]):
+            '';?>
+         <div class="search-item">
+            <div><a href="<?=$link?>"><?=$item['title']?></a></div>
+            <div><?=$item['short_text']?></div>
+         </div>
+      <?}
+      echo $this->paginatorWidget($items);
+   }
+   else echo 'Ничего не найдено';?>
+</div>

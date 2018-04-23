@@ -1,0 +1,51 @@
+<?php
+$term = $this->term;
+
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/section/term.css'))
+;
+$this->headTitle($term['meta_title']);
+$this->headMeta()
+   ->appendName('keywords', $term['meta_keywords'])
+   ->appendName('description', $term['meta_description'])
+;
+$lang = $this->layout()->lang;
+
+?>
+
+<div id="middle">
+   <h1><?=$term['title']?></h1>
+   <div class="desc_text">
+      <?=$term['text']?>
+   </div>
+
+   <div id="articles">
+      <? if(count($this->articles)){?>
+         <div>
+            <div>
+               <?=$this->translate('Статьи на тему:')?>
+            </div>
+            <? foreach($this->articles as $article){?>
+               <div>
+                  <a href="<?=$this->url('article', [
+                     'lang' => $lang,
+                     'title' => $article['t_title'],
+                  ])?>">
+                     <?=$article['title']?>
+                  </a>
+               </div>
+               <div>
+                  <?=$article['short_text']?>
+               </div>
+            <? }?>
+         </div>
+      <? }?>
+   </div>
+</div>
+
+<div id="right">
+   <?=$this->glossary?>
+</div>
+
+
+

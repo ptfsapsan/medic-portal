@@ -1,0 +1,24 @@
+<?php
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/admin/term.css'))
+;
+
+$this->headScript()
+   ->appendFile($this->basePath('js/admin/term.js'))
+;
+
+$f = $this->form_term;
+?>
+
+
+<div>
+   <?php
+   echo $this->form()->openTag($f);
+   foreach($f as $el){?>
+      <div>
+         <?=$this->formRow($el)?>
+      </div>
+   <? }
+   echo $this->form()->closeTag();
+   ?>
+</div>

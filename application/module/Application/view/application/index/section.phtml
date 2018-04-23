@@ -1,0 +1,30 @@
+<?
+$page = $this->page;
+
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/index/anatomy.css'))
+;
+$this->headScript()
+   ->appendFile($this->basePath('js/index/anatomy.js'))
+;
+$this->headTitle($this->escapeHtml($page['meta_title']));
+
+$this->headMeta()
+   ->appendName('keywords', $this->escapeHtml($page['meta_keywords']))
+   ->appendName('description', $this->escapeHtml($page['meta_description']))
+;
+
+
+?>
+
+
+<div>
+   <div id="left_menu">
+
+   </div>
+   <div id="main_win">
+      <? foreach(range('A', 'Z') as $l){
+         echo $l;
+      }?>
+   </div>
+</div>

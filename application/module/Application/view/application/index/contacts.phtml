@@ -1,0 +1,27 @@
+<?php
+$this->headLink()
+->appendStylesheet($this->basePath('css/index/contacts.css'));
+
+$page = $this->item;
+$this->headTitle($this->escapeHtml($page['meta_title']));
+
+$this->headMeta()
+->appendName('keywords', $this->escapeHtml($page['meta_keywords']))
+->appendName('description', $this->escapeHtml($page['meta_description']))
+;
+?>
+
+
+<div>
+   <? $f = $this->form_contacts;
+   echo $this->form()->openTag($f);
+   foreach($f as $el){?>
+      <div>
+         <?=$this->formRow($el)?>
+      </div>
+   <? }
+   echo $this->form()->closeTag();
+   ?>
+
+
+</div>

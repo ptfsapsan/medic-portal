@@ -1,0 +1,24 @@
+<?php
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/admin/sections.css'))
+;
+$this->headScript()
+   ->appendFile($this->basePath('js/admin/sections.js'))
+;
+
+
+?>
+
+<div>
+   <? $f = $this->form_section;
+   echo $this->form()->openTag($f);
+   foreach($f as $el){?>
+      <div>
+         <?=$this->formRow($el)?>
+      </div>
+   <? }
+   echo $this->form()->closeTag();
+   ?>
+
+
+</div>

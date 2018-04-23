@@ -1,0 +1,24 @@
+<?php $lang = $this->layout()->lang;
+$langs = $this->layout()->langs;
+$l = [];
+foreach($langs as $code => $name){
+$l[$this->url(null, ['lang' => $code], [], true)] = $name;
+}
+
+
+?>
+
+<ul id="breadcrumbs">
+   <? foreach($this->pages as $page){
+      if($page->isActive()){?>
+         <h1><?=$this->translate($page->getLabel())?></h1>
+      <? }
+      else{?>
+         <a href="<?=$page->getHref()?>">
+            <?=$this->translate($page->getLabel())?>
+         </a>
+      <? }?>
+   <? }?>
+   
+   
+</ul>

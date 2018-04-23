@@ -1,0 +1,17 @@
+<?
+$domain = $this->serverUrl();
+$langs = $this->langs;
+
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+echo '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+ // термины
+   foreach($langs as $lang){?>
+      <sitemap>
+         <loc>
+            <?="$domain/sitemap/$lang"?>
+         </loc>
+      </sitemap>
+   <? }
+echo '</sitemapindex>';

@@ -1,0 +1,167 @@
+<?
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
+use Zend\Form\Element\Select;
+use Zend\Form\Element\Radio;
+
+//function clear($content){
+//   $content = preg_replace('/[\r\n\s]+|<!--[^>]*?-->/s', ' ', $content);
+//   header('content-encoding: gzip');
+//   header('vary: accept-encoding');
+//   header('content-length: ' . strlen($content));
+//   return gzencode($content);
+//}
+//
+//ob_start('clear');
+
+$lang = $this->lang;
+$langs = $this->langs;
+
+echo $this->doctype() ?>
+
+   <html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <?= $this->headTitle($this->translate('Международный медицинский портал'))
+         ->setSeparator(' - ')->setAutoEscape(false) ?>
+
+      <?= $this->headMeta()
+         ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+         ->appendName('google-site-verification',
+            'tiG-rvzFSQbMAXMmodgNWjmp3_uJkv3fNCiXJVYfWxE')
+         ->appendName('yandex-verification', 'dc91f3d7d6350e68')
+         ->appendHttpEquiv('X-UA-Compatible', 'IE=edge') ?>
+
+      <!-- Le styles -->
+      <? foreach($langs as $i){
+         $code = $i['code'];
+         if($lang == $code) continue;
+         $this->headLink([
+            'rel' => 'alternate',
+            'hreflang' => $code,
+            'href' => $this->url(null, ['lang' => $code], [], true),
+         ]);
+      }?>
+      <?= $this->headLink(
+         [
+            'rel' => 'shortcut icon', 'type' => 'image/x-icon',
+            'href' => $this->basePath('images/favicon.ico')
+         ])
+         ->prependStylesheet($this->basePath('css/layout.css')) ?>
+
+      <!-- Scripts -->
+      <?= $this->headScript()
+         ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+         ->appendFile($this->basePath('js/layout.js'))
+      ?>
+
+      <script type="text/javascript">
+         var vars = {
+            lang: '<?=$lang?>',
+            letter: '<?=$this->term_letter?>'
+         }
+      </script>
+
+   </head>
+   <body>
+   <div id="messages_fon">
+      <?
+         echo $this->flashMessenger()->render(
+          FlashMessenger::NAMESPACE_ERROR, ['alert', 'alert-danger']);
+         echo $this->flashMessenger()->render(
+          FlashMessenger::NAMESPACE_INFO, ['alert', 'alert-info']);
+         echo $this->flashMessenger()->render(
+          FlashMessenger::NAMESPACE_SUCCESS, ['alert', 'alert-success']);
+      ?>
+      <img src="<?= $this->basePath('/images/close.png') ?>" alt="">
+   </div>
+
+   <header>
+      <div id="search">
+         <? $f = $this->form_search;
+         echo $this->form()->openTag($f);
+         foreach($f as $el){
+            if($el->getAttribute('type') == 'radio'){?>
+               <div><?=$this->formElement($el)?></div>
+            <? }
+            else echo $this->formElement($el);
+         }
+         echo $this->form()->closeTag();?>
+      </div>
+   </header>
+
+   <section id="left">
+      <div id="logo">
+         <a href="<?=$this->url('index', ['action' => 'index',
+                                          'lang' => $lang])?>">
+            <?=$this->translate('Международный медицинский портал')?>
+         </a>
+      </div>
+      <div id="lang_icon">
+         <? $l = [];
+         foreach($langs as $i){
+            $code = $i['code'];
+            $link = $this->url(null, ['lang' => $code], [], true);
+            $l[$link] = $i['title'];?>
+            <div <?=$code == $lang? 'class="active"': ''?>>
+               <a href="<?=$link?>" title="<?=$i['title']?>">
+                  <img src="<?=$this->basePath("images/lang/$code.png")?>"
+                  title="<?=$i['title']?>" alt="<?=$code?>">
+               </a>
+            </div>
+         <? }?>
+      </div>
+      <div class="clear"></div>
+      
+      <nav id="desktop_nav">
+         <? $navigation = $this->navigation('navigation-main');
+         echo $navigation->menu()->setPartial('application/main-menu'); ?>
+      </nav>
+
+      <div id="mobil_buttons">
+         <div id="show_menu">
+            <a href="javascript:">
+               <?=$this->translate('Меню')?>
+            </a>
+         </div>
+         
+         <div id="show_terms">
+            <a href="javascript:">
+               <?=$this->translate('Термины')?>
+            </a>
+         </div>
+
+         <div id="show_search">
+            <a href="javascript:">
+               <?=$this->translate('Поиск')?>
+            </a>
+         </div>
+      </div>
+   </section>
+   
+   <nav id="mobil_nav">
+      <? $navigation = $this->navigation('navigation-main');
+      echo $navigation->menu()->setPartial('application/main-menu'); ?>
+   </nav>
+
+   <section id="content">
+
+      <?= $this->content ?>
+
+   </section>
+
+   <div class="clear"></div>
+   <footer>
+      <p>&copy; 2017</p>
+   </footer>
+
+
+   <?= $this->inlineScript() ?>
+   <!-- Yandex.Metrika counter -->
+   <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter44103754 = new Ya.Metrika({ id:44103754, clickmap:true, trackLinks:true, accurateTrackBounce:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/44103754" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+   <!-- /Yandex.Metrika counter -->
+
+   </body>
+   </html>
+<? //ob_end_flush();
+
+?>

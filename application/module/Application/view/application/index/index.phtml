@@ -1,0 +1,23 @@
+<?
+$page = $this->page;
+
+$this->headLink()
+   //->appendStylesheet($this->basePath('css/index/index.css'))
+;
+$this->headScript()
+   //->appendFile($this->basePath('js/index/index.js'))
+;
+$item = $this->item;
+
+?>
+
+
+<div>
+   <div id="left_menu">
+
+   </div>
+   <div id="main_win">
+      <h1> <?=$item['title']?> </h1>
+      <?=$item['text']?>
+   </div>
+</div>

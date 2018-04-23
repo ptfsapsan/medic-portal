@@ -1,0 +1,27 @@
+<?php
+$this->headScript()
+   ->appendFile($this->basePath('/js/tinymce/tinymce.min.js'))
+   ->appendFile($this->basePath('/js/tinymce/langs/ru.js'))
+   ->appendFile($this->basePath('js/admin/texts.js'))
+;
+$texts = $this->texts;
+?>
+
+<div>
+   <a href="<?=$this->url('admin', ['action' => 'text'])?>">Добавить текст</a>
+   <? if(!empty($texts['count'])){
+      foreach($texts['data'] as $text){?>
+         <div>
+            <a href="<?=$this->url('admin', ['action' => 'text',
+               'id' => $text['id']])?>">
+               <?=$text['word']?>
+            </a>
+         </div>
+      <? }
+   }
+   else{?>
+      <div>
+         Ничего не найдено
+      </div>
+   <? }?>
+</div>

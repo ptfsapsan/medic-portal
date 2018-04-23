@@ -1,0 +1,63 @@
+<?php
+use Zend\Form\Element\Checkbox;
+
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/checkbox-button.css'))
+;
+$this->headScript()
+   ->appendFile($this->basePath('js/admin/languages.js'))
+;
+
+$checkbox = new Checkbox('active');
+$checkbox->setUncheckedValue('no')
+   ->setCheckedValue('yes');
+?>
+
+<div>
+   Добавить язык
+   <? $f = $this->form_language;
+   echo $this->form()->openTag($f);
+   foreach($f as $el){?>
+      <div>
+         <?=$this->formRow($el)?>
+      </div>
+   <? }
+   echo $this->form()->closeTag();
+   ?>
+
+   <table>
+      <tr>
+         <th>Код</th>
+         <th>Название</th>
+         <th>Активность</th>
+         <th>Удалить</th>
+      </tr>
+      <? foreach($this->languages as $language){
+         $id = $language['id'];?>
+         <tr>
+            <td><?=$language['code']?></td>
+            <td><?=$language['title']?></td>
+            <td>
+               <div class="can-toggle">
+                  <? $checkbox->setChecked($language['active'] == 'yes')
+                     ->setAttributes([
+                        'id' => 'act_'.$id,
+                        'data-id' => $id,
+                     ]);?>
+                  <?=$this->formElement($checkbox)?>
+                  <label for="act_<?=$id?>">
+                     <span class="toggle-switch" data-checked="On" data-unchecked="Off"> </span>
+                  </label>
+               </div>
+            </td>
+            <td>
+               <a href="?act=delete&id=<?=$id?>">
+                  <img src="<?=$this->basePath('images/delete-icon.png')?>">
+               </a>
+            </td>
+         </tr>
+      <? }?>
+   </table>
+
+
+</div>

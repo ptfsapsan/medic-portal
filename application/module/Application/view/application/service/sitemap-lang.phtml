@@ -1,0 +1,29 @@
+<?
+use Application\Model\Main;
+
+$domain = $this->serverUrl();
+
+$lang = $this->lang;
+$langs = $this->langs;
+$terms = $this->terms;
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">';
+
+ // термины
+if(count($terms)){
+   foreach($terms as $term){
+      $section = Main::getSections()[$term['section_id']];?>
+      <url>
+         <loc>
+            <?= $domain . $this->url('term', [
+               'section' => $section,
+               'title' => $term['link'],
+               'lang' => $lang,
+            ])?>
+         </loc>
+      </url>
+   <? }
+}
+echo '</urlset>';

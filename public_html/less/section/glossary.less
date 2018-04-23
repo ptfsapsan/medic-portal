@@ -1,0 +1,60 @@
+@import '../vars';
+
+#terms{
+  margin-top: 20px;
+  text-align: center;
+  #term_list{
+    width: @right-w - 67px;
+    border-radius: 5px;
+    min-height: 50px;
+    background-color: @light-color;
+    border: 1px solid #666;
+    float: left;
+    z-index: 1;
+    padding: 5px 5px 5px 24px;
+    margin: 10px 0;
+    text-align: left;
+    height: auto;
+    a{
+      text-indent: -1em;
+      line-height: 1em;
+      margin: 15px 2px;
+      display: block;
+      &.active, &:hover{
+        color: #b00;
+        text-decoration: underline;
+      }
+    }
+  }
+  #term_letters{
+    float: left;
+    vertical-align: top;
+    margin: 20px 0 10px -1px;
+    z-index: 2;
+    ul{
+      li{
+        background-color: darken(@light-color, 20%);
+        height: 23px;
+        width: 30px;
+        border: 1px solid #666;
+        border-radius: 0 5px 5px 0;
+        margin-top: 5px;
+        padding-top: 5px;
+        cursor: pointer;
+        text-align: center;
+        font-weight: bold;
+        a{
+          display: block;
+        }
+      }
+      li.active{
+        background-color: @light-color;
+        border-left: none;
+        cursor: default;
+      }
+      li:first-of-type{
+        margin-top: 0;
+      }
+    }
+  }
+}

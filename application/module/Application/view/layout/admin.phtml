@@ -1,0 +1,54 @@
+<?
+
+$fm = $this->flashMessenger();
+
+echo $this->doctype(); ?>
+<html>
+<head>
+   <?=$this->headMeta()
+      ->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8')
+      ->appendName('keywords', '')
+      ->appendName('description', '')
+      ->setName('viewport',
+         'width=device-width,minimum-scale=1,initial-scale=1'
+      )
+   .
+   $this->headTitle('');
+   ?>
+
+   <!-- CSS -->
+   <?=$this->headLink()
+      ->appendStylesheet($this->basePath('/css/admin/layout.css'));?>
+
+
+   <!-- Scripts -->
+   <?=$this->headScript()
+      ->prependFile($this->basePath('/js/admin/main.js'))
+      ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+   ;?>
+
+
+
+
+</head>
+<body>
+   <div id="messages_fon">
+      <? if($fm->hasErrorMessages())
+         echo $fm->render('error', ['alert', 'alert-danger']);
+      if($fm->hasInfoMessages())
+         echo $fm->render('info', ['alert', 'alert-info']);
+      ?>
+      <img src="<?=$this->basePath('/images/close.png')?>" alt="">
+   </div>
+
+   <div id="wrap">
+      <div id="main-navigation">
+         <?=$this->navigation('navigation-admin')->menu()
+            ->setPartial('application/menu-admin')?>
+      </div>
+      <div id="content">
+         <?=$this->layout()->content?>
+      </div>
+   </div>
+</body>
+</html>

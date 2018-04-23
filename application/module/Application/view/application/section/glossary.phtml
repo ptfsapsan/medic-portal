@@ -1,0 +1,68 @@
+<?
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/section/glossary.css'))
+;
+$this->inlineScript()
+   ->appendFile($this->basePath('js/section/glossary.js'))
+;
+
+$letters = $this->term_letters;
+$terms = $this->terms;
+
+$term_title = empty($this->term)? null: $this->term['title'];
+$lang = $this->layout()->lang;
+?>
+
+<script type="text/javascript">
+   var vars = {
+      lang: '<?=$this->layout()->lang?>',
+      letter: '<?=$this->term_letter?>',
+      section_id: <?=$this->section_id?>
+   }
+
+</script>
+
+<style type="text/css">
+   #term_list{
+      min-height: <?=count($letters) * 35?>px !important;
+   }
+</style>
+
+
+
+<? if(count($letters)){?>
+   <div id="terms">
+      <div id="term_list">
+         <ul>
+            <? if(count($terms)) foreach($terms as $term){
+               $active = $term['title'] == $term_title;?>
+               <a <?=$active? 'class="active"': ''?>
+                  href="<?=$this->url('term', [
+                  'section' => $this->section,
+                  'title' => $term['title'],
+                  'lang' => $term['lang'],
+               ])?>">
+                  <?=$term['term_title']?>
+               </a>
+            <? }?>
+         </ul>
+      </div>
+      <div id="term_letters">
+         <ul>
+            <? foreach($letters as $letter){
+               $is_active = $this->term_letter == $letter;?>
+               <li class="letter <?=$is_active? 'active': ''?>"
+                   data-letter="<?=$letter?>">
+                  <a href="<?=$this->url(null, [],
+                     ['query' => ['letter' => $letter]], true)?>">
+                     <?=$letter?>
+                  </a>
+               </li>
+            <? }?>
+         </ul>
+      </div>
+      <div class="clear"></div>
+   </div>
+<? }?>
+
+

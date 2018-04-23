@@ -1,0 +1,28 @@
+<?
+
+$lang = $this->layout()->lang;
+?>
+
+<ul>
+<? foreach($this->container as $page){
+   $label = $page->getLabel();
+   $tr_label = $this->translate('menu_'.$label);
+   $params = ['lang' => $lang];
+   if($page->getRoute() == 'section') $params['section'] = $label;
+   $page->setParams($params);
+   $href = $page->getHref();
+   $is_active = $page->isActive();
+   if(!empty($this->layout()->section)){
+      if($this->layout()->section == $label) $is_active = true;
+   }
+   ?>
+
+
+   <li<?=$is_active? ' class="active"': ''?>>
+      <a href="<?=$href?>" title="<?=$tr_label?>">
+         <?=$tr_label?>
+      </a>
+   </li>
+<? }?>
+</ul>
+

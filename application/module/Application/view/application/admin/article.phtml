@@ -1,0 +1,43 @@
+<?php
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/admin/article.css'))
+;
+
+$this->headScript()
+   ->appendFile($this->basePath('js/admin/article.js'))
+;
+$article_id = $this->article_id;
+?>
+
+<script type="text/javascript">
+   var vars = {
+      article_id: <?=$article_id?>
+   };
+</script>
+
+
+<div>
+   <?php
+   $f = $this->form_article;
+   echo $this->form()->openTag($f);
+   foreach($f as $el){?>
+      <div>
+         <?=$this->formRow($el)?>
+      </div>
+   <? }
+   echo $this->form()->closeTag();
+   ?>
+</div>
+
+<div>
+   <div id="term_list">
+      <ul>
+      <? foreach($this->terms as $term){?>
+         <li data-id="<?=$term['id']?>" class="term">
+            <?=$term['ru_term_title']?>
+         </li>
+      <? }?>
+      </ul>
+   </div>
+   <div id="choose_terms"></div>
+</div>

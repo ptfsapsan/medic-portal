@@ -1,0 +1,71 @@
+<?php
+use Zend\Form\Element\Checkbox;
+
+$this->headScript()
+   ->appendFile($this->basePath('js/admin/articles.js'))
+;
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/admin/articles.css'))
+   ->appendStylesheet($this->basePath('css/checkbox-button.css'))
+;
+$articles = $this->articles;
+$checkbox = new Checkbox('active');
+$checkbox->setCheckedValue('yes');
+$checkbox->setUncheckedValue('no');
+
+?>
+
+<div>
+   Добавление статьи
+   <form method="post">
+      <input type="hidden" value="add_article" name="act">
+      Название на русском языке
+      <input type="text" name="title_ru" title="">
+      <input type="submit" value="Добавить статью">
+   </form>
+
+   <? if(!empty($articles['count'])){?>
+      <table>
+         <tr>
+            <td>ID</td>
+            <td>Транслит</td>
+            <td>Активность</td>
+            <td>Редактировать</td>
+            <td>Удалить</td>
+         </tr>
+      <? foreach($articles['data'] as $article){
+         $id = $article['id'];?>
+         <tr>
+            <td><?=$article['id']?></td>
+            <td><?=$article['title']?></td>
+            <td>
+               <div class="can-toggle">
+                  <? $checkbox->setAttributes([
+                     'id' => 'active_'.$id,
+                     'data-id' => $id,
+                  ]);
+                  $checkbox->setValue($article['active']);
+                  echo $this->formElement($checkbox);?>
+                  <label for="active_<?=$id?>">
+                     <span class="toggle-switch" data-checked="On"
+                           data-unchecked="Off"> </span>
+                  </label>
+               </div>
+            </td>
+            <td><a href="<?=$this->url('admin', ['action' => 'article',
+                                                 'id' => $id])?>">
+                  Редактировать</a></td>
+            <td><a href="?act=delete&id=<?=$id?>">
+                  <img src="/images/delete-icon.png"> </a>
+            </td>
+         </tr>
+      <? }?>
+      </table>
+      <?=$this->paginatorWidget($articles)?>
+   <? }
+   else{?>
+      <div>
+         Ничего не найдено
+      </div>
+   <? }?>
+</div>

@@ -1,0 +1,26 @@
+<?php
+$texts = $this->section_texts;
+
+$this->headLink()
+   ->appendStylesheet($this->basePath('css/section/index.css'))
+;
+$this->headTitle($texts['meta_title']);
+$this->headMeta()
+   ->appendName('keywords', $texts['meta_keywords'])
+   ->appendName('description', $texts['meta_description'])
+;
+
+?>
+
+
+<div id="middle">
+   <h1><?=$texts['title']?></h1>
+   <div><?=$texts['text']?></div>
+</div>
+
+<div id="right">
+   <?=$this->glossary?>
+</div>
+
+
+
